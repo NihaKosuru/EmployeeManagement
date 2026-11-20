@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Employee Management</h1>
+    <div id="user-info" class="hidden">
+        <span id="logged-in-as"></span>
+        <button type="button" class="secondary" onclick="logout()">Logout</button>
+    </div>
+</header>
+
+<div id="message" class="message hidden"></div>
+
+<!-- Login -->
+<section id="login-section" class="card login-card">
+    <h2>Login</h2>
+    <form id="login-form">
+        <label>Username <input id="username" required></label>
+        <label>Password <input id="password" type="password" required></label>
+        <button type="submit">Login</button>
+    </form>
+    <p class="hint">admin / admin123 (full access) &nbsp;|&nbsp; user / user123 (read only)</p>
+</section>
+
+<main id="app" class="hidden">
+    <nav>
+        <button type="button" class="tab active" data-tab="employees">Employees</button>
+        <button type="button" class="tab" data-tab="departments">Departments</button>
+        <button type="button" class="tab" data-tab="projects">Projects</button>
+        <button type="button" class="tab" data-tab="assignments">Assignments</button>
+        <button type="button" class="tab" data-tab="reports">Reports</button>
+    </nav>
+
+    <!-- Employees -->
+    <section id="employees" class="tab-content">
+        <div class="card admin-only">
+            <h2 id="employee-form-title">Add Employee</h2>
+            <form id="employee-form" class="form-grid">
+                <input type="hidden" id="employee-id">
+                <input type="hidden" id="employee-version">
+                <label>Name <input id="employee-name" required></label>
+                <label>Email <input id="employee-email" type="email" required></label>
+                <label>Designation <input id="employee-designation" required></label>
+                <label>Salary <input id="employee-salary" type="number" min="1" step="0.01" required></label>
+                <label>Department <select id="employee-department" class="department-select" required></select></label>
+                <div class="form-buttons">
+                    <button type="submit" id="employee-save-button">Add</button>
+                    <button type="button" class="secondary" onclick="resetEmployeeForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Employees</h2>
+            <form id="employee-search" class="toolbar">
+                <input id="search-name" placeholder="Search by name">
+                <select id="search-department" class="department-select">
+                    <option value="">All departments</option>
+                </select>
+                <select id="search-sort">
+                    <option value="name">Sort by name</option>
+                    <option value="salary">Sort by salary</option>
+                    <option value="designation">Sort by designation</option>
+                    <option value="id">Sort by employee ID</option>
+                </select>
+                <button type="submit">Search</button>
+            </form>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                    <tr><th>Employee ID</th><th>Name</th><th>Email</th><th>Designation</th><th>Salary</th><th>Department</th><th></th></tr>
+                    </thead>
+                    <tbody id="employee-table"></tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <button type="button" class="secondary" id="previous-page">Previous</button>
+                <span id="page-info"></span>
+                <button type="button" class="secondary" id="next-page">Next</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departments -->
+    <section id="departments" class="tab-content hidden">
+        <div class="card admin-only">
+            <h2>Add Department</h2>
+            <form id="department-form" class="form-grid">
+                <label>Name <input id="department-name" required></label>
+                <label>Location <input id="department-location"></label>
+                <div class="form-buttons"><button type="submit">Add</button></div>
+            </form>
+        </div>
+        <div class="card">
+            <h2>Departments</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Name</th><th>Location</th><th></th></tr></thead>
+                    <tbody id="department-table"></tbody>
+                </table>
+            </div>
+            <p id="department-members" class="members"></p>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="tab-content hidden">
+        <div class="card admin-only">
+            <h2>Add Project</h2>
+            <form id="project-form" class="form-grid">
+                <label>Name <input id="project-name" required></label>
+                <label>Description <input id="project-description"></label>
+                <label>Budget <input id="project-budget" type="number" min="1" step="0.01" required></label>
+                <div class="form-buttons"><button type="submit">Add</button></div>
+            </form>
+        </div>
+        <div class="card">
+            <h2>Projects</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Name</th><th>Description</th><th>Budget</th><th></th></tr></thead>
+                    <tbody id="project-table"></tbody>
+                </table>
+            </div>
+            <p id="project-members" class="members"></p>
+        </div>
+    </section>
+
+    <!-- Assignments -->
+    <section id="assignments" class="tab-content hidden">
+        <div class="card admin-only">
+            <h2>Assign Employee to Project</h2>
+            <form id="assignment-form" class="form-grid">
+                <label>Employee <select id="assignment-employee" required></select></label>
+                <label>Project <select id="assignment-project" required></select></label>
+                <label>Role <input id="assignment-role" required></label>
+                <div class="form-buttons"><button type="submit">Assign</button></div>
+            </form>
+        </div>
+        <div class="card">
+            <h2>Assignments</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Employee</th><th>Project</th><th>Role</th><th>Assigned On</th><th></th></tr></thead>
+                    <tbody id="assignment-table"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reports -->
+    <section id="reports" class="tab-content hidden">
+        <div class="card">
+            <h2>Department Summary</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Department</th><th>Employees</th><th>Total Salary</th></tr></thead>
+                    <tbody id="department-report"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Project Summary</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Project</th><th>Budget</th><th>Employees</th></tr></thead>
+                    <tbody id="project-report"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

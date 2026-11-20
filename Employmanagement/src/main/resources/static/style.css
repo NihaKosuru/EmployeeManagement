@@ -1,0 +1,212 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #222;
+    background: #f2f4f7;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background: #1f4e79;
+    color: white;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 20px;
+}
+
+#user-info span {
+    margin-right: 10px;
+}
+
+main, .message, .login-card {
+    max-width: 1100px;
+    margin: 16px auto;
+    padding: 0 16px;
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 16px;
+    color: #1f4e79;
+}
+
+.card {
+    background: white;
+    border: 1px solid #dde1e6;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.login-card {
+    max-width: 360px;
+    padding: 20px;
+}
+
+.login-card form label {
+    display: block;
+    margin-bottom: 12px;
+}
+
+.hint {
+    color: #666;
+    font-size: 12px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* A USER (read-only) does not see the add, edit and delete controls */
+body.read-only .admin-only {
+    display: none !important;
+}
+
+/* Tabs */
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 16px;
+}
+
+.tab {
+    background: #e3e8ee;
+    color: #222;
+}
+
+.tab.active {
+    background: #1f4e79;
+    color: white;
+}
+
+/* Forms */
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+input, select {
+    padding: 7px;
+    border: 1px solid #c4cad1;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    align-items: end;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+button {
+    padding: 7px 14px;
+    border: none;
+    border-radius: 4px;
+    background: #1f4e79;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+button.secondary {
+    background: #6c757d;
+}
+
+button.danger {
+    background: #c0392b;
+}
+
+button.small {
+    padding: 4px 9px;
+    font-size: 12px;
+    margin-right: 4px;
+}
+
+/* Tables */
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    border-bottom: 1px solid #e5e8eb;
+    text-align: left;
+    white-space: nowrap;
+}
+
+th {
+    background: #f7f9fb;
+}
+
+tbody tr:hover {
+    background: #f7f9fb;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.members {
+    color: #444;
+}
+
+/* Success and error messages */
+.message {
+    padding: 10px 14px;
+    border-radius: 4px;
+    background: #e3f4e8;
+    color: #1e6b34;
+    border: 1px solid #b7e0c3;
+}
+
+.message.error {
+    background: #fdecea;
+    color: #a12b1f;
+    border-color: #f5c2bc;
+}
